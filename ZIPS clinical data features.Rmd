@@ -1,0 +1,75 @@
+---
+title: "ZIPS clinical data features"
+author: "Prasida Holla"
+date: "2025-08-12"
+output: 
+  html_document:
+    self_contained: true
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+Required packages
+
+```{r setup, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(writexl)
+library(readxl)
+library(ggplot2)
+library(ggpubr)
+library(Hmisc)
+library(ComplexHeatmap)
+#library(monocle3)
+library(scCustomize)
+library(Seurat) 
+library(SeuratWrappers)
+library(patchwork)
+library(SeuratDisk)
+library(MAST)
+library(googledrive)
+library(miscTools)
+library(circlize)
+library(png)
+library(cowplot)
+library(tmod)  
+library(Biobase)
+library(pdftools)
+library(ggh4x)
+library(EDASeq)
+library(haven)
+library(Hmisc)
+library(haven)
+
+draw_label_theme <- function(label, theme = NULL, element = "text", ...) {
+  if (is.null(theme)) {
+    theme <- ggplot2::theme_get()
+  }
+  if (!element %in% names(theme)) {
+    stop("Element must be a valid ggplot theme element name")
+  }
+
+  elements <- ggplot2::calc_element(element, theme)
+
+  cowplot::draw_label(label, 
+                      fontfamily = elements$family,
+                      fontface = elements$face,
+                      colour = elements$color,
+                      size = elements$size,
+                      ...
+  )
+}
+```
+
+# 1. Read in the ZIPS stata file (look for updated stata file)
+```{r read in clinical data from stata file, include=TRUE}
+zips.clindat <- read_dta("~/Downloads/ZIPS, SCA and splenectomy/ZIPS Study/ZIPS_Holla_20220822.dta")
+zips.clindat.df <- haven::as_factor(zips.clindat, levels="labels") %>%
+  as.data.frame() %>%
+  mutate(StudyID= as.factor(studyid))
+
+```
+
