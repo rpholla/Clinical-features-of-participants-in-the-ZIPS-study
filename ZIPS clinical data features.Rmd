@@ -23,13 +23,7 @@ library(ggplot2)
 library(ggpubr)
 library(Hmisc)
 library(ComplexHeatmap)
-#library(monocle3)
-library(scCustomize)
-library(Seurat) 
-library(SeuratWrappers)
 library(patchwork)
-library(SeuratDisk)
-library(MAST)
 library(googledrive)
 library(miscTools)
 library(circlize)
@@ -40,7 +34,6 @@ library(Biobase)
 library(pdftools)
 library(ggh4x)
 library(EDASeq)
-library(haven)
 library(Hmisc)
 library(haven)
 
@@ -66,10 +59,9 @@ draw_label_theme <- function(label, theme = NULL, element = "text", ...) {
 
 # 1. Read in the ZIPS stata file (look for updated stata file)
 ```{r read in clinical data from stata file, include=TRUE}
-zips.clindat <- read_dta("~/Downloads/ZIPS, SCA and splenectomy/ZIPS Study/ZIPS_Holla_20220822.dta")
+zips.clindat <- read_dta("~/Downloads/ZIPS, SCA and splenectomy/ZIPS Study/ZIPS_Analytic_20230126.dta")
 zips.clindat.df <- haven::as_factor(zips.clindat, levels="labels") %>%
   as.data.frame() %>%
   mutate(StudyID= as.factor(studyid))
-
 ```
 
